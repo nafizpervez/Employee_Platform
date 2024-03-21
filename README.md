@@ -2,7 +2,9 @@
 
 ## Run the BackEnd Server Standalone
 
-```uvicorn main:app --reload
+```
+uvicorn main:app --reload
+
 ```
 
 ## Available Scripts
