@@ -1,10 +1,10 @@
 from sqlalchemy import Column, Integer, String
-from backend.database.database import Base
+from database.database import Base
 
 class Employee(Base):
     __tablename__ = 'employees'
 
-    id = Column(String, Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     month = Column(String)
     date = Column(String)
     day = Column(String)
