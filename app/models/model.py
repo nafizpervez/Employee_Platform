@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String
 from database.database import Base
 
 class DataModel(Base):
-    __tablename__ = 'data'
+    __tablename__ = 'dataStored'
 
     month = Column(String)
     date = Column(String)
@@ -12,4 +12,4 @@ class DataModel(Base):
     department = Column(String)
     in_time = Column(String)
     out_time = Column(String)
-    work_hour = Column(String)
+    work_hour = Column(Integer)

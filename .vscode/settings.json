@@ -2,7 +2,9 @@
     "cSpell.words": [
         "autoflush",
         "fastapi",
+        "laquo",
         "pydantic",
+        "raquo",
         "sessionmaker",
         "sqlalchemy"
     ],
