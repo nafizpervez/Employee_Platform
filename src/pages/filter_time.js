@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactPaginate from 'react-paginate';
+import logo from '../logo.svg';
 import html2pdf from 'html2pdf.js';
 
 function Report() {
@@ -42,19 +43,19 @@ function Report() {
         const tableRows = document.querySelectorAll('tbody tr');
 
         tableRows.forEach(row => {
-            const rowInTime = convertToTime(row.cells[6].textContent); // Index of In Time column
-            const rowOutTime = convertToTime(row.cells[7].textContent); // Index of Out Time column
+            const rowInTime = convertToTime(row.cells[6].textContent);
+            const rowOutTime = convertToTime(row.cells[7].textContent);
 
             if (rowInTime > convertedInTime) {
-                row.cells[6].style.backgroundColor = 'red'; // Background color of In Time column
+                row.cells[6].style.backgroundColor = 'red';
             } else {
-                row.cells[6].style.backgroundColor = ''; // Reset background color
+                row.cells[6].style.backgroundColor = '';
             }
 
             if (rowOutTime < convertedOutTime) {
-                row.cells[7].style.backgroundColor = 'blue'; // Background color of Out Time column
+                row.cells[7].style.backgroundColor = 'yellow';
             } else {
-                row.cells[7].style.backgroundColor = ''; // Reset background color
+                row.cells[7].style.backgroundColor = '';
             }
         });
     };
@@ -125,6 +126,12 @@ function Report() {
 
     return (
         <div>
+            <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+                <p>
+                    Time Validation Platform
+                </p>
+            </header>
             <div className="container">
                 <div className="card p-2 d-grid gap-2 my-4">
                     {/* Input fields for in time and out time */}
@@ -143,7 +150,7 @@ function Report() {
                     {/* Button to handle input values */}
                     <button className="btn btn-primary" onClick={handleColorChange}>Change Colors</button>
                     {/* Download button */}
-                    <button className="btn btn-primary ml-2" onClick={downloadTableData}>Download All Table Data</button>
+                    <button className="btn btn-primary ml-2" onClick={downloadTableData}>Download All Time Validated Table Data</button>
                 </div>
                 <table className="table table-bordered">
                     {/* Table headers */}

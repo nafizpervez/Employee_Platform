@@ -12,4 +12,4 @@ class DataModel(Base):
     department = Column(String)
     in_time = Column(String)
     out_time = Column(String)
-    work_hour = Column(Integer)
+    work_hour = Column(String)

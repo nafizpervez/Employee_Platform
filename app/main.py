@@ -30,8 +30,15 @@ async def upload_data(file: UploadFile = File(...)):
     try:
         contents = await file.read()
         df = pd.read_excel(io.BytesIO(contents))
+        
+        # Truncate microseconds from in_time, out_time, and work_hour columns
+        df['in_time'] = df['in_time'].astype(str).str[:5]  
+        df['out_time'] = df['out_time'].astype(str).str[:5] 
+        df['work_hour'] = df['work_hour'].astype(str).str[:5]
+        
         # Process the DataFrame and save it to the SQLite database
         df.to_sql('dataStored', engine, if_exists='append', index=False)
+        
         return JSONResponse(content=UploadResponse(message="Data uploaded successfully").dict(), status_code=200)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
