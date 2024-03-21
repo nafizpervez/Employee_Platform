@@ -45,23 +45,28 @@ function App() {
       const workSheet = workBook.Sheets[workSheetName];
       const data = XLSX.utils.sheet_to_json(workSheet);
       setExcelData(data.slice(0, 100));
+      const formData = new FormData();
+      formData.append('file', excelFile);
 
       try {
         const response = await fetch('http://localhost:8000/upload_data', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
+          body: formData,
         });
-        if (response.ok) {
-          console.log('Data uploaded successfully');
-        } else {
-          console.error('Failed to upload data');
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.detail || 'Failed to upload file');
         }
+
+        const data = await response.json();
+        console.log(data); // You can handle the response message here
+
       } catch (error) {
-        console.error('Error occurred:', error);
+        console.error('Error:', error);
       }
+
+
     }
   }
 

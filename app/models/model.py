@@ -4,7 +4,7 @@ from database.database import Base
 class Employee(Base):
     __tablename__ = 'employees'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, index=True)
     month = Column(String)
     date = Column(String)
     day = Column(String)
@@ -14,5 +14,3 @@ class Employee(Base):
     in_time = Column(String)
     out_time = Column(String)
     work_hours = Column(String)
-
-
