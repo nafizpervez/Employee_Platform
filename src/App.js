@@ -37,7 +37,7 @@ function App() {
   }
 
   //submit event
-  const handleFileSubmit = (e) => {
+  const handleFileSubmit = async (e) => {
     e.preventDefault();
     if (excelFile !== null) {
       const workBook = XLSX.read(excelFile, { type: 'buffer' });
@@ -45,6 +45,23 @@ function App() {
       const workSheet = workBook.Sheets[workSheetName];
       const data = XLSX.utils.sheet_to_json(workSheet);
       setExcelData(data.slice(0, 100));
+
+      try {
+        const response = await fetch('http://localhost:8000/upload_data', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        if (response.ok) {
+          console.log('Data uploaded successfully');
+        } else {
+          console.error('Failed to upload data');
+        }
+      } catch (error) {
+        console.error('Error occurred:', error);
+      }
     }
   }
 
