@@ -1,7 +1,7 @@
 from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from models.model import Employee
+from models.model import DataModel
 from database.database import get_db
 import pandas as pd
 import shutil
@@ -20,6 +20,7 @@ app.add_middleware(
 
 
 @app.post("/upload_data")
+
 async def upload_file(file: UploadFile = File(...), db: Session = Depends(get_db)):
     # Check if the uploaded file is an Excel file
     if not file.filename.endswith('.xlsx'):
@@ -37,12 +38,12 @@ async def upload_file(file: UploadFile = File(...), db: Session = Depends(get_db
     
     # Iterate through DataFrame rows and save data to the database
     for _, row in df.iterrows():
-        data = Employee(
+        data = DataModel(
             # Modify this part to match your Excel columns
             month=row['month'],
             date=row['date'],
             day=row['day'],
-            e_id=row['id'],
+            id=row['id'],
             name=row['name'],
             department=row['department'],
             in_time=row['in_time'],

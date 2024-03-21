@@ -77,7 +77,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Employee Attendance Platform
+          Employee Platform
         </p>
       </header>
 
