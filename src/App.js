@@ -5,6 +5,8 @@ import { useState } from 'react';
 import * as XLSX from 'xlsx';
 
 function App() {
+  const [file, setFile] = useState(null);
+  const [error, setError] = useState(null);
 
   //onChange states
   const [excelFile, setExcelFile] = useState(null);
@@ -19,6 +21,10 @@ function App() {
     let selectedFile = e.target.files[0]
     if (selectedFile) {
       if (selectedFile && fileTypes.includes(selectedFile.type)) {
+
+        setFile(selectedFile);
+        setError(null);
+
         setTypeError(null);
         let reader = new FileReader();
         reader.readAsArrayBuffer(selectedFile);
@@ -37,33 +43,38 @@ function App() {
   }
 
   //submit event
-  const handleFileSubmit = async (e) => {
-    e.preventDefault();
+  const handleFileSubmit = async (event) => {
+    event.preventDefault();
     if (excelFile !== null) {
       const workBook = XLSX.read(excelFile, { type: 'buffer' });
       const workSheetName = workBook.SheetNames[0];
       const workSheet = workBook.Sheets[workSheetName];
       const data = XLSX.utils.sheet_to_json(workSheet);
-      setExcelData(data.slice(0, 100));
-      const formData = new FormData();
-      formData.append('file', excelFile);
+      setExcelData(data.slice(0, 50));
 
-      try {
-        const response = await fetch('http://localhost:8000/upload_data', {
-          method: 'POST',
-          body: formData,
-        });
+      if (file) {
+        try {
+          const formData = new FormData();
+          formData.append('file', file);
 
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.detail || 'Failed to upload file');
+          const response = await fetch('http://localhost:8000/upload_data', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Failed to upload file');
+          }
+
+          const responseData = await response.json();
+          console.log(responseData.message); // You can handle the response message here
+
+        } catch (error) {
+          console.error('Error:', error);
         }
-
-        const data = await response.json();
-        console.log(data); // You can handle the response message here
-
-      } catch (error) {
-        console.error('Error:', error);
+      } else {
+        setError('Please select a file');
       }
 
 

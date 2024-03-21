@@ -3,7 +3,7 @@ from database.database import Base
 
 class DataModel(Base):
     __tablename__ = 'data'
-    
+
     month = Column(String)
     date = Column(String)
     day = Column(String)
@@ -12,4 +12,4 @@ class DataModel(Base):
     department = Column(String)
     in_time = Column(String)
     out_time = Column(String)
-    work_hours = Column(String)
+    work_hour = Column(String)
