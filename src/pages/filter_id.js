@@ -72,7 +72,6 @@ function Report() {
             </header>
             <div className="container">
                 <div className="card p-2 d-grid gap-2 my-4">
-                    {/* Search bar */}
                     <input
                         type="text"
                         placeholder="Search by ID"
@@ -81,7 +80,6 @@ function Report() {
                     />
                 </div>
                 <table id="table" className="table table-bordered">
-                    {/* Table headers */}
                     <thead className="table-dark">
                         <tr>
                             <th>Month</th>
@@ -95,14 +93,11 @@ function Report() {
                             <th>Work Hour</th>
                         </tr>
                     </thead>
-                    {/* Table data */}
                     <tbody>
                         {displayData}
                     </tbody>
                 </table>
-                {/* Download button */}
                 <button className="btn btn-primary" onClick={downloadTableData}>Download Filtered Table Data</button>
-                {/* Pagination */}
                 <div className="d-flex justify-content-center mt-3">
                     <div className="p-1 text-center">
                         <ReactPaginate

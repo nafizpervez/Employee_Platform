@@ -92,7 +92,6 @@ function Report() {
         <div>
             <div className="container">
                 <div className="card p-2 d-grid gap-2 my-4">
-                    {/* Search bar */}
                     <input
                         type="text"
                         placeholder="Search by ID"
@@ -100,10 +99,8 @@ function Report() {
                         onChange={handleSearchIdChange}
                     />
                 </div>
-                {/* Download button */}
                 <button className="btn btn-primary mb-3" onClick={downloadTableData}>Download All Table Data</button>
                 <table className="table table-bordered">
-                    {/* Table headers */}
                     <thead className="table-dark">
                         <tr>
                             <th>Month</th>
@@ -117,7 +114,6 @@ function Report() {
                             <th>Work Hour</th>
                         </tr>
                     </thead>
-                    {/* Table data */}
                     <tbody>
                         {data
                             .filter(row => row.id.toString().includes(searchId))
@@ -138,7 +134,6 @@ function Report() {
                         }
                     </tbody>
                 </table>
-                {/* Pagination */}
                 <div className="d-flex justify-content-center mt-3">
                     <div className="p-1 text-center">
                         <ReactPaginate

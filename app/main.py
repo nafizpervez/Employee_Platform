@@ -15,7 +15,6 @@ app = FastAPI()
 class UploadResponse(BaseModel):
     message: str
 
-# Allow all origins, methods, and headers for CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -31,7 +30,6 @@ async def upload_data(file: UploadFile = File(...)):
         contents = await file.read()
         df = pd.read_excel(io.BytesIO(contents))
         
-        # Truncate microseconds from in_time, out_time, and work_hour columns
         df['in_time'] = df['in_time'].astype(str).str[:5]  
         df['out_time'] = df['out_time'].astype(str).str[:5] 
         df['work_hour'] = df['work_hour'].astype(str).str[:5]
