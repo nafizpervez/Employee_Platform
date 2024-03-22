@@ -23,4 +23,4 @@ You may also see any lint errors in the console.
 http://127.0.0.1:8000/docs
 ```
 This is the api link for openjson API of the BackEnd
-Open to test the API END Points
+Open to test the API END Point
