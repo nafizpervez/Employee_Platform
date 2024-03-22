@@ -69,7 +69,7 @@ export default function Upload() {
                     }
 
                     const responseData = await response.json();
-                    console.log(responseData.message); // You can handle the response message here
+                    console.log(responseData.message);
 
                 } catch (error) {
                     console.error('Error:', error);
@@ -148,7 +148,6 @@ export default function Upload() {
                 </div>
             </div>
         </div >
-
     );
 }
 

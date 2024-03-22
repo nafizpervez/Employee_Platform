@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactPaginate from 'react-paginate';
 import logo from '../logo.svg';
-import html2pdf from 'html2pdf.js';
 
 function Report() {
     const [data, setData] = useState([]);
@@ -67,57 +66,6 @@ function Report() {
         return hours * 60 + minutes;
     };
 
-    const downloadTableData = async () => {
-        try {
-            const response = await fetch(`http://localhost:8000/data_stored`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch data');
-            }
-            const jsonData = await response.json();
-
-            const tableContent = jsonData
-                .map((row) => (
-                    `<tr key=${row.id}>
-                        <td>${row.month}</td>
-                        <td>${row.date}</td>
-                        <td>${row.day}</td>
-                        <td>${row.id}</td>
-                        <td>${row.name}</td>
-                        <td>${row.department}</td>
-                        <td>${row.in_time}</td>
-                        <td>${row.out_time}</td>
-                        <td>${row.work_hour}</td>
-                    </tr>`
-                ))
-                .join('');
-
-            const htmlContent = `
-                <table id="table" class="table table-bordered">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Month</th>
-                            <th>Date</th>
-                            <th>Day</th>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Department</th>
-                            <th>In Time</th>
-                            <th>Out Time</th>
-                            <th>Work Hour</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${tableContent}
-                    </tbody>
-                </table>
-            `;
-
-            html2pdf().from(htmlContent).save('table_data.pdf');
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-
     const pageCount = Math.ceil(data.length / itemsPerPage);
 
     const changePage = ({ selected }) => {
@@ -134,7 +82,6 @@ function Report() {
             </header>
             <div className="container">
                 <div className="card p-2 d-grid gap-2 my-4">
-                    {/* Input fields for in time and out time */}
                     <input
                         type="text"
                         placeholder="In Time (HH:MM)"
@@ -147,13 +94,9 @@ function Report() {
                         value={outTime}
                         onChange={handleOutTimeChange}
                     />
-                    {/* Button to handle input values */}
-                    <button className="btn btn-primary" onClick={handleColorChange}>Change Colors</button>
-                    {/* Download button */}
-                    <button className="btn btn-primary ml-2" onClick={downloadTableData}>Download All Time Validated Table Data</button>
+                    <button className="btn btn-primary" onClick={handleColorChange}>Validate</button>
                 </div>
                 <table className="table table-bordered">
-                    {/* Table headers */}
                     <thead className="table-dark">
                         <tr>
                             <th>Month</th>
@@ -167,7 +110,6 @@ function Report() {
                             <th>Work Hour</th>
                         </tr>
                     </thead>
-                    {/* Table data */}
                     <tbody>
                         {data
                             .slice(pageNumber * itemsPerPage, (pageNumber + 1) * itemsPerPage)
@@ -187,7 +129,6 @@ function Report() {
                         }
                     </tbody>
                 </table>
-                {/* Pagination */}
                 <div className="d-flex justify-content-center mt-3">
                     <div className="p-1 text-center">
                         <ReactPaginate
