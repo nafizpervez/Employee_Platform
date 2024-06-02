@@ -1,4 +1,4 @@
-#Employee Platform
+###Employee Platform
 
 ## Run the BackEnd Uvicorn Server
 
@@ -7,7 +7,9 @@ uvicorn main:app --reload
 ```
 
 ## RUN the FrontEnd React Server 
-
+```
+npm run build
+```
 ```
 npm start
 ```
